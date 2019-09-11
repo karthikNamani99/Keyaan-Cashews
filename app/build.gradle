@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.example.keyaancashews"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -21,9 +21,24 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'com.google.android.gms:play-services-wallet:9.4.0'
+    implementation 'com.android.support:support-v4:29.0.0'
+    implementation 'com.android.support:appcompat-v7:29.0.0'
+    implementation 'com.intuit.sdp:sdp-android:1.0.3'
+    implementation 'com.android.support:design:29.0.0'
+    implementation 'com.mcxiaoke.volley:library:1.0.19'
+
+    implementation 'com.ss.bannerslider:bannerslider:2.0.0'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+
+    implementation 'com.google.code.gson:gson:2.6.1'
+    implementation('com.paypal.sdk:paypal-android-sdk:2.14.4') {
+        exclude group: 'io.card'
+    }
+
+    implementation 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
+    implementation 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
+
+    implementation 'com.google.code.gson:gson:2.6.1'
 }
