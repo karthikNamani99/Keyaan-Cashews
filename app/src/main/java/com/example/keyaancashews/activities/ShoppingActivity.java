@@ -1,9 +1,14 @@
 package com.example.keyaancashews.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,19 +22,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ss.com.bannerslider.Slider;
-import ss.com.bannerslider.adapters.SliderAdapter;
 import ss.com.bannerslider.event.OnSlideClickListener;
-import ss.com.bannerslider.viewholder.ImageSlideViewHolder;
+
 
 
 public class ShoppingActivity extends AppCompatActivity {
 
     Slider slider;
-
     private static final String TAG = ShoppingActivity.class.getSimpleName();
 
     private RecyclerView shoppingRecyclerView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,15 +74,7 @@ public class ShoppingActivity extends AppCompatActivity {
                         startActivity(intent2);
 
                         break;
-//            case 0:
-//                viewHolder.bindImageSlide("http://keyitsol.com/keyaancashews/uploads/banners/b96f63f9120b98104bd36494215ae38b.jpg");
-//                break;
-//            case 1:
-//                viewHolder.bindImageSlide("http://keyitsol.com/keyaancashews/uploads/banners/d01e3c0214c7451b59b034b6d58ce4e5.jpg");
-//                break;
-//            case 2:
-//                viewHolder.bindImageSlide("http://keyitsol.com/keyaancashews/uploads/banners/6089dee9a3cb70e767f26b49e5c27c65.jpg");
-//                break;
+
                 }
             }
         });
@@ -96,6 +90,42 @@ public class ShoppingActivity extends AppCompatActivity {
         shoppingRecyclerView.setAdapter(shopAdapter);
     }
 
+    @Override
+    public void onBackPressed() {
+
+        doExit();
+    }
+
+    private void doExit() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+                ShoppingActivity.this);
+
+        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(ShoppingActivity.this, "Logout Successfully Completed", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+        alertDialog.setNegativeButton("No", null);
+
+        alertDialog.setMessage("Do you want to exit?");
+        alertDialog.setTitle("AppTitle");
+
+        AlertDialog dialog = alertDialog.create();
+        dialog.show();
+
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.darker_gray);
+        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        Button negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+
+        positiveButton.setTextColor(Color.parseColor("#FF0B8B42"));
+
+        negativeButton.setTextColor(Color.parseColor("#FFFF0400"));
+
+
+    }
 
     private List<ProductObject> getAllProductsOnSale() {
         List<ProductObject> products = new ArrayList<ProductObject>();

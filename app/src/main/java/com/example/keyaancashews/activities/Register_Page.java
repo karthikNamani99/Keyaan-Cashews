@@ -63,7 +63,8 @@ public class Register_Page extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Finish the<a class="Eyqj4pXnY " style="z-index: 2147483647;" title="Click to Continue > by Advertise" href="#2293366"> registration<img src="http://cdncache-a.akamaihd.net/items/it/img/arrow-10x10.png" /></a> screen and return to the Login activity
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), Login_Page.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
@@ -79,7 +80,6 @@ public class Register_Page extends AppCompatActivity {
         String email = emailText.getText().toString();
         String password = passwordText.getText().toString();
         String mobile = mobileText.getText().toString();
-
         if (validate() == false) {
             onSignupFailed();
             return;
@@ -97,23 +97,26 @@ public class Register_Page extends AppCompatActivity {
                     public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
 
                         Toast.makeText(getApplicationContext(), "Registration Success fully completed! Please Login", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), Login_Page.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         Log.i(TAG, "post submitted to API." + response.body().toString());
-
 
                     }
 
                     @Override
                     public void onFailure(Call<LoginResponse> call, Throwable t) {
-                        Log.e(TAG, "Unable to submit post to API.");
+
+                        Toast.makeText(getApplicationContext(), "Please Enter Valid Login Details", Toast.LENGTH_LONG).show();
+//                        Log.e(TAG, "Unable to submit post to API.");
                     }
                 });
 
     }
 
+
     public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Please Enter all fields", Toast.LENGTH_LONG).show();
 
         signupButton.setEnabled(true);
     }
@@ -125,6 +128,7 @@ public class Register_Page extends AppCompatActivity {
         String email = emailText.getText().toString();
         String password = passwordText.getText().toString();
         String mobile = mobileText.getText().toString();
+        String TakenUsername = api.toString();
 
         if (name.isEmpty() || name.length() < 3) {
             nameText.setError("at least 3 characters");
@@ -156,183 +160,8 @@ public class Register_Page extends AppCompatActivity {
             passwordText.setError(null);
         }
 
+
         return valid;
     }
 }
 
-
-
-
-//    private void saveToServerDB() {
-//
-//        String name = nameText.getText().toString().trim();
-//        String email = emailText.getText().toString().trim();
-//        String password = passwordText.getText().toString().trim();
-//        String mobile = mobileText.getText().toString().trim();
-//
-//        validate();
-
-
-
-//        Call<LoginResponse> call = RetrofitClient
-//                .getInstance()
-//                .getApi()
-//                .registeruser(email, password, name, mobile);
-//
-//        call.enqueue(new Callback<LoginResponse>() {
-//            @Override
-//            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-//
-//
-//                Log.i(TAG, "post submitted to API." + response.body().toString());
-//
-//                Intent intent=new Intent(getApplicationContext(),LoginPage.class);
-//                startActivity(intent);
-//
-//            }
-
-//            @Override
-//            public void onFailure(Call<LoginResponse> call, Throwable t) {
-//
-//                Log.e(TAG, "Unable to submit post to API.");            }
-//        });
-
-
-
-//        _signupButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Log.d(TAG, "Signup");
-//
-//
-//                final ProgressDialog progressDialog = new ProgressDialog(Register_Page.this,
-//                        R.style.AppTheme);
-//                progressDialog.setIndeterminate(true);
-//                progressDialog.setMessage("Creating Account...");
-//                progressDialog.show();
-//
-//                String name = _nameText.getText().toString();
-//                String email = _emailText.getText().toString();
-//                String password = _passwordText.getText().toString();
-//                String mobile = _mobile.getText().toString();
-//                validate();
-//
-//
-//                Call<ResponseBody> call = RetrofitClient
-//                        .getInstance()
-//                        .getApi()
-//                        .registeruser(email, password, name, mobile);
-//
-//                call.enqueue(new Callback<ResponseBody>() {
-//                    @Override
-//                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                        try {
-//                            String s = response.body().string();
-//                            Intent intent = new Intent(getApplicationContext(), LoginPage.class);
-//                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                            startActivity(intent);
-//                            Toast.makeText(Register_Page.this, s, Toast.LENGTH_LONG).show();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-//
-//                        Toast.makeText(Register_Page.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//            }
-//
-//        });
-//        _loginLink.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                finish();
-//            }
-//        });
-//    }
-//
-//    private void validate() {
-//        String name = _nameText.getText().toString();
-//        String email = _emailText.getText().toString();
-//        String password = _passwordText.getText().toString();
-//        String mobile = _mobile.getText().toString();
-//
-//        if (name.isEmpty() || name.length() < 3) {
-//            _nameText.setError("at least 3 characters");
-//
-//        } else {
-//            _nameText.setError(null);
-//        }
-//
-//        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-//            _emailText.setError("enter a valid email address");
-//
-//        } else {
-//            _emailText.setError(null);
-//        }
-//
-//        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-//            _passwordText.setError("between 4 and 10 alphanumeric characters");
-//
-//        } else {
-//            _passwordText.setError(null);
-//        }
-//        if (mobile.isEmpty() || mobile.length() < 10) {
-//            _mobile.setError("enter mobile number");
-//
-//        } else {
-//            _mobile.setError(null);
-//        }
-//    }
-
-//    private void signup() {
-//        Log.d(TAG, "Signup");
-//
-//
-//
-//        _signupButton.setEnabled(false);
-//
-//        final ProgressDialog progressDialog = new ProgressDialog(Register_Page.this,
-//                R.style.AppTheme);
-//        progressDialog.setIndeterminate(true);
-//        progressDialog.setMessage("Creating Account...");
-//        progressDialog.show();
-//
-//        String name = _nameText.getText().toString();
-//        String email = _emailText.getText().toString();
-//        String password = _passwordText.getText().toString();
-//        String mobile = _mobile.getText().toString();
-//
-//        if (name.isEmpty() || name.length() < 3) {
-//            _nameText.setError("at least 3 characters");
-//
-//        } else {
-//            _nameText.setError(null);
-//        }
-//
-//        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-//            _emailText.setError("enter a valid email address");
-//
-//        } else {
-//            _emailText.setError(null);
-//        }
-//
-//        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-//            _passwordText.setError("between 4 and 10 alphanumeric characters");
-//
-//        } else {
-//            _passwordText.setError(null);
-//        }
-//        if (mobile.isEmpty() || mobile.length() < 10) {
-//            _mobile.setError("enter mobile number");
-//
-//        } else {
-//            _mobile.setError(null);
-//        }
-//
-
-
-//    }

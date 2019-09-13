@@ -62,6 +62,7 @@ public class Login_Page extends AppCompatActivity {
             public void onClick(View v) {
                 // Start the Signup activity
                 Intent intent = new Intent(getApplicationContext(), Register_Page.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivityForResult(intent, REQUEST_SIGNUP);
             }
         });
@@ -90,12 +91,16 @@ public class Login_Page extends AppCompatActivity {
 
                     Log.i(TAG, "post submitted to API." + response.body().toString());
                     Intent intent=new Intent(getApplicationContext(),ShoppingActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
             }
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Log.e(TAG, "Unable to submit post to API.");
+
+
+                Toast.makeText(getApplicationContext(), "Please Enter Valid Login Details", Toast.LENGTH_LONG).show();
+//                Log.e(TAG, "Unable to submit post to API.");
             }
         });
     }
@@ -105,37 +110,6 @@ public class Login_Page extends AppCompatActivity {
 
         loginButton.setEnabled(true);
     }
-
-
-
-
-
-//
-//        Call<LoginResponse> call = RetrofitClient
-//                .getInstance()
-//                .getApi()
-//                .loginuser(email, password);
-//
-//
-//        call.enqueue(new Callback<LoginResponse>() {
-//            @Override
-//            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-//                if(response.isSuccess()) {
-//                    Log.i(TAG, "post submitted to API." + response.body().toString());
-//                    Intent intent=new Intent(getApplicationContext(),LoginPage.class);
-//                    startActivity(intent);
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<LoginResponse> call, Throwable t) {
-//
-//                Log.d("onFailure", t.toString());
-//            }
-//        });
-
-
 
 
     public boolean validate() {
